@@ -6,7 +6,7 @@ import uuid
 app = FastAPI()
 
 sessions: Dict[str, Dict[str, Any]] = {}
-
+ 
 class ContextRequest(BaseModel):
     merchant: dict
     trigger: dict
@@ -20,12 +20,13 @@ class ReplyRequest(BaseModel):
 # -------- LOGIC -------- #
 
 def parse_context(merchant, trigger):
-    return {
+    return{
         "business_type": merchant.get("category", "").lower(),
         "city": merchant.get("city", ""),
-        "trigger_event": trigger.get("event", "").lower(),
+        "trigger_event": trigger.get("event", "some recent issue").lower(),
     }
-
+    
+       
 def classify_trigger(event):
     if "rating" in event:
         return "reputation_fix"
