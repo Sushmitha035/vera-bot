@@ -28,12 +28,16 @@ def parse_context(merchant, trigger):
     
        
 def classify_trigger(event):
-    if "rating" in event:
+    e = event.lower()
+
+    if "rating" in e or "review" in e:
         return "reputation_fix"
-    elif "festival" in event or "diwali" in event:
-        return "festival_campaign"
-    elif "footfall" in event:
+    elif "footfall" in e or "low sales" in e:
         return "increase_walkins"
+    elif "festival" in e or "diwali" in e or "season" in e:
+        return "festival_campaign"
+    elif "competitor" in e or "nearby" in e:
+        return "competition"
     else:
         return "general"
 
