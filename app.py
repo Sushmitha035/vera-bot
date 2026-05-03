@@ -70,12 +70,28 @@ def decide_actions(trigger_type, business_type):
 
 def generate_response(parsed, actions):
     msg = f"Hey! I noticed {parsed['trigger_event']}.\n\n"
-    msg += "Here’s what you can do right away:\n"
+    msg += "Here’s what I recommend (in order of impact):\n\n"
 
     for i, act in enumerate(actions, 1):
-        msg += f"{i}. {act}\n"
+        act_lower = act.lower()
 
-    msg += "\nThis will help improve your business quickly."
+        if "review" in act_lower:
+            reason = "→ helps rebuild customer trust and improve your rating"
+        elif "photo" in act_lower:
+            reason = "→ improves visibility and attracts more customers"
+        elif "combo" in act_lower or "meal" in act_lower:
+            reason = "→ increases order value and simplifies customer choices"
+        elif "best-selling" in act_lower:
+            reason = "→ guides customers and boosts conversions"
+        elif "offer" in act_lower or "discount" in act_lower:
+            reason = "→ drives more walk-ins and sales"
+        else:
+            reason = "→ improves overall business performance"
+
+        msg += f"{i}. {act} {reason}\n"
+
+    msg += "\nStart with the first 2 actions for quickest results."
+
     return msg
 
 # -------- ENDPOINTS -------- #
